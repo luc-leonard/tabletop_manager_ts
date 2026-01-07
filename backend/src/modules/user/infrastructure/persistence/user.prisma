@@ -1,0 +1,23 @@
+enum ProfileVisibility {
+  PUBLIC
+  PRIVATE
+  FRIENDS_ONLY
+}
+
+model User {
+  id                String            @id @default(uuid()) @db.Uuid
+  email             String            @unique
+  username          String            @unique
+  passwordHash      String            @map("password_hash")
+  displayName       String?           @map("display_name")
+  avatarUrl         String?           @map("avatar_url")
+  timezone          String?
+  bio               String?
+  isActiveGm        Boolean           @default(false) @map("is_active_gm")
+  isAdmin           Boolean           @default(false) @map("is_admin")
+  profileVisibility ProfileVisibility @default(PUBLIC) @map("profile_visibility")
+
+  ...timestamps
+
+  @@map("users")
+}
